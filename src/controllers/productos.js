@@ -1,5 +1,6 @@
-const fs = require('fs');
-const filename = 'productos.json';
+import fs from 'fs';
+//const fs = require('fs');
+const filename = './src/models/productos.json';
 
 class ProductManager {
     products = []
@@ -10,30 +11,29 @@ class ProductManager {
     }
 
     generateID = () => {
-        if (this.products.length === 0) return 1
-        return this.products[this.products.length - 1].id + 1
+        let prod = this.getProducts()
+        if (prod.length === 0) return 1
+        return prod[prod.length - 1].id + 1
     }
 
     addProduct(title, description, price, image, code, stock) {
+        const lista = this.getProducts()
         const id = this.generateID()
-        console.log(" id a agregar", id)
+        console.log("muestro ID", id)
         const product = {id, title, description, price, image, code, stock}
-
         // Valido que el producto tenga todos los campos
         if (!title || !description || !price || !image || !code || !stock) {
             return console.log('Error: Todos los campos son obligatorios')
         }
-
         //Valido que el producto ingresado no exista
-        const productExists = this.products.some((product) => product.code === code)
+        const productExists = lista.some((product) => product.code === code)
+        console.log("producto existe ?", productExists)
         if (productExists) {
             return console.log('Error: El producto ya existe')
         } else {
-            this.products.push(product)
-            fs.writeFileSync(filename, JSON.stringify(this.products, null, '\t'))
-            console.log('Producto agregado correctamente')
+            lista.push(product)
+            fs.writeFileSync(filename, JSON.stringify(lista, null, '\t'))
         }
-
     }
 
     getProducts() {
@@ -45,37 +45,40 @@ class ProductManager {
         const product = products.find(product => product.id === parseInt(id))
         if (!product) {
             console.log(`Error: No se encontró el producto con el id ${id}`);
-        }else
-        {
+        } else {
             console.log("Muestro el producto con el id", id);
             return product
         }
     }
 
     updateProduct = (id, title, description, price, image, code, stock) => {
-        const product = this.products.find(product => product.id === id);
+    //TODO ver que pasa con el update, me actualiza solo lo que le mando en el body, el resto queda vacio
+
+        const list = this.getProducts()
+        const product = list.findIndex((p) => p.id === parseInt(id))
         if (!product) {
             console.log(`Error: No se encontró el producto con el id ${id}`);
             return;
         }
         const newProduct = {id, title, description, price, image, code, stock}
-        this.products = this.products.map((product) => product.id === id ? newProduct : product)
-        fs.writeFileSync(filename, JSON.stringify(this.products, null, '\t'))
-        console.log('Producto actualizado correctamente')
+        console.log(newProduct)
+        fs.writeFileSync(filename, JSON.stringify(list.map((product) => product.id === parseInt(id) ? newProduct : product), null, '\t'))
+
     }
 
     deleteProduct = (id) => {
-        const product = JSON.parse(fs.readFileSync(filename, 'utf-8'))
-        product.find(product => product.id === id)
-        if (!product) {
+        const product = this.getProducts()
+        const resultado = product.find(product => product.id === parseInt(id))
+        console.log(resultado)
+        if (!resultado) {
             console.log(`Error: No se encontró el producto con el id ${id}`);
             return;
         }
-        const newProduct = product.filter(product => product.id !== id)
+        const newProduct = product.filter(product => product.id !== parseInt(id))
         fs.writeFileSync(filename, JSON.stringify(newProduct, null, '\t'))
         console.log('Producto eliminado correctamente')
     }
 }
 
 // Exporto la clase ProductManager para poder ser usada en el archivo index.js. Esto resuelve el error TypeError: ProductManager is not a constructor
-module.exports = ProductManager
+export default ProductManager;
