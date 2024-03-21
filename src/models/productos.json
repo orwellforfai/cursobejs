@@ -1,5 +1,14 @@
 [
 	{
+		"id": 1,
+		"title": "Producto1",
+		"description": "Descripcion1",
+		"price": "Precio1",
+		"image": "Imagen1",
+		"code": "Codigo1",
+		"stock": 1
+	},
+	{
 		"id": 2,
 		"title": "Producto2",
 		"description": "Descripcion2",
@@ -27,8 +36,13 @@
 		"stock": 4
 	},
 	{
-		"id": "5",
-		"stock": 1000000
+		"id": 5,
+		"title": "Producto5",
+		"description": "Descripcion5",
+		"price": "Precio5",
+		"image": "Imagen5",
+		"code": "Codigo5",
+		"stock": 5
 	},
 	{
 		"id": 6,
@@ -49,6 +63,15 @@
 		"stock": 7
 	},
 	{
+		"id": 8,
+		"title": "Producto8",
+		"description": "Descripcion8",
+		"price": "Precio8",
+		"image": "Imagen8",
+		"code": "Codigo8",
+		"stock": 8
+	},
+	{
 		"id": 9,
 		"title": "Producto9",
 		"description": "Descripcion9",
@@ -58,20 +81,12 @@
 		"stock": 9
 	},
 	{
-		"id": 11,
-		"stock": 1000000
-	},
-	{
-		"id": "12",
-		"stock": 1000000
-	},
-	{
-		"id": "121",
-		"title": "Producto12",
-		"description": "Descripcion12",
-		"price": "Precio12",
-		"image": "Imagen12",
-		"code": "Codigo12",
-		"stock": 12
+		"id": 10,
+		"title": "Producto10",
+		"description": "Descripcion10",
+		"price": "Precio10",
+		"image": "Imagen10",
+		"code": "Codigo10",
+		"stock": 10
 	}
 ]
