@@ -54,21 +54,19 @@ router.post('/products', async (request, response,) => {
 })
 
 router.put('/products/:id', async (request, response) => {
-    console.log("Metodo PUT")
     const id = request.params.id
-    console.log("id a modificar", id)
-    const body = request.body
-    console.log("Body", body)
-    try {
+  console.log("id a modificar", id)
+ const updatedFields = request.body
+   try {
 
-        const data =  await  productManager.updateProduct(parseInt(id), body.title, body.description, body.price, body.image, body.code, body.stock)
+     const data = await productManager.updateProduct(id, updatedFields)
         response.send({
             message: "Metodo PUT OK",
             data: data
         })
     } catch (error) {
-        console.log("Error", error)
-        response.send("Error")
+      console.log("Error", error)
+     response.send("Error")
     }
 })
 

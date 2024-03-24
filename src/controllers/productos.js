@@ -51,19 +51,24 @@ class ProductManager {
         }
     }
 
-    updateProduct = (id, title, description, price, image, code, stock) => {
-    //TODO ver que pasa con el update, me actualiza solo lo que le mando en el body, el resto queda vacio
-
+    updateProduct = (id, updatedFields) => {
+        //TODO ver que pasa con el update, no encuentra el producto
+        console.log("muestro id", id)
+        console.log("muestro updatedFields", updatedFields)
         const list = this.getProducts()
-        const product = list.findIndex((p) => p.id === parseInt(id))
+//        console.log("muestro lista", list)
+        const product = list.findIndex(product => product.id === parseInt(id))
+        console.log("muestro producto", product)
         if (!product) {
             console.log(`Error: No se encontró el producto con el id ${id}`);
             return;
         }
-        const newProduct = {id, title, description, price, image, code, stock}
-        console.log(newProduct)
-        fs.writeFileSync(filename, JSON.stringify(list.map((product) => product.id === parseInt(id) ? newProduct : product), null, '\t'))
-
+        list[product] = {...list[product], ...updatedFields}
+//        const newProduct = {id, title, description, price, image, code, stock}
+        //      console.log(newProduct)
+        //    fs.writeFileSync(filename, JSON.stringify(list.map((product) => product.id === parseInt(id) ? newProduct : product), null, '\t'))
+        fs.writeFileSync(filename, JSON.stringify(list, null, '\t'))
+        return;
     }
 
     deleteProduct = (id) => {
